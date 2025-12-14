@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TabView: View {
+struct CategoryTabView: View {
     @State private var selectedTab = 0
     let categoriesTabs: [String]
     

@@ -3,6 +3,8 @@ import SwiftUI
 struct WelcomeView: View {
     let onContinue: () -> Void
     
+    @State private var showJoinsheet = false
+    
     var body: some View {
         let background = ZStack {
             Image("Screen5BackgroundImage")
@@ -38,7 +40,7 @@ struct WelcomeView: View {
             .lineSpacing(4)
         
         let joinUsButton = Button("Join Us") {
-            onContinue()
+            showJoinsheet = true
         }
         .font(.headline)
         .foregroundColor(.black)
@@ -87,6 +89,17 @@ struct WelcomeView: View {
         return ZStack {
             background
             mainContainer
+        }
+        .sheet(isPresented: $showJoinsheet) {
+            JoinUsSheet(
+                onCancel: { showJoinsheet = false},
+                onContinue: {
+                    showJoinsheet = false
+                    onContinue()
+                }
+            )
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
         }
     }
 }

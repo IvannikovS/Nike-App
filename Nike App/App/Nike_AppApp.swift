@@ -4,7 +4,7 @@ import SwiftUI
 struct Nike_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }

@@ -32,7 +32,7 @@ struct ShopView: View {
             .padding(.horizontal, 20)
 
             HStack {
-                TabView(categoriesTabs: categoriesTabs)
+                CategoryTabView(categoriesTabs: categoriesTabs)
             }
             .padding(.top, 32)
             
