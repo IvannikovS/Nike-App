@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "2016-12-08-nike-logo-mesh-1Vlm.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -12,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "2016-12-08-nike-logo-mesh-1Vlm 1.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -23,6 +25,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "2016-12-08-nike-logo-mesh-1Vlm 2.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
