@@ -4,15 +4,15 @@ struct RootView: View {
     @State private var isOnboardingDone = false
 
     var body: some View {
-//        if isOnboardingDone {
+        if isOnboardingDone {
             MainTabView()
-//        } else {
-//            ContentView {
-//                withAnimation(.easeInOut(duration: 0.25)) {
-//                    isOnboardingDone = true
-//                }
-//            }
-//        }
+        } else {
+            ContentView {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    isOnboardingDone = true
+                }
+            }
+        }
     }
 }
 
