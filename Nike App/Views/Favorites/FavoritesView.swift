@@ -1,40 +1,27 @@
-// HomeView.swift
+
 import SwiftUI
 
-struct HomeView: View {
+struct FavoritesView: View {
     @StateObject private var viewModel = ProductViewModel()
     @State private var refreshID = UUID()
     
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Заголовок и поиск
+                // Заголовок
                 HStack {
-                    Text("Best Sellers")
+                    Text("Favorites")
                         .font(.title2)
                         .fontWeight(.bold)
                     
                     Spacer()
-                    
-                    Image(systemName: "magnifyingglass")
-                        .font(.title2)
                 }
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
                 .padding(.bottom, 8)
                 
-                // Фильтр категорий
-                CategoryFilterView(
-                    selectedCategory: $viewModel.selectedCategory,
-                    availableCategories: viewModel.availableCategories
-                )
-                .onChange(of: viewModel.selectedCategory) {
-                    viewModel.filterProducts()
-                }
-                
-                // Сетка товаров
-                if viewModel.filteredProducts.isEmpty {
-                    emptyProductsView
+                if viewModel.getLikedProducts().isEmpty {
+                    emptyStateView
                 } else {
                     productsGridView
                 }
@@ -42,25 +29,30 @@ struct HomeView: View {
             .navigationBarHidden(true)
             .id(refreshID)
             .onAppear {
-                viewModel.filterProducts()
+                viewModel.loadLikedProducts()
+                viewModel.updateProductsWithLikes()
+                print("Favorites count: \(viewModel.getLikedProducts().count)")
             }
             .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
+                // Принудительное обновление при изменении лайков
                 refreshID = UUID()
+                viewModel.updateProductsWithLikes()
+                print("Favorites updated! Count: \(viewModel.getLikedProducts().count)")
             }
         }
     }
     
-    private var emptyProductsView: some View {
+    private var emptyStateView: some View {
         VStack(spacing: 20) {
-            Image(systemName: "cube.box")
+            Image(systemName: "heart")
                 .font(.system(size: 60))
                 .foregroundColor(.gray)
             
-            Text("No products in this category")
+            Text("No favorites yet")
                 .font(.title3)
                 .foregroundColor(.gray)
             
-            Text("Try selecting a different category")
+            Text("Tap the heart icon to add products to favorites")
                 .font(.caption)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -78,7 +70,7 @@ struct HomeView: View {
                 ],
                 spacing: 16
             ) {
-                ForEach(viewModel.filteredProducts) { product in
+                ForEach(viewModel.getLikedProducts()) { product in
                     ProductCardView(product: product) {
                         viewModel.toggleLike(for: product)
                     }
@@ -91,5 +83,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    FavoritesView()
 }
