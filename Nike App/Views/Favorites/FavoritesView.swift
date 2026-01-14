@@ -8,7 +8,6 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Заголовок
                 HStack {
                     Text("Favorites")
                         .font(.title2)
@@ -34,7 +33,6 @@ struct FavoritesView: View {
                 print("Favorites count: \(viewModel.getLikedProducts().count)")
             }
             .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
-                // Принудительное обновление при изменении лайков
                 refreshID = UUID()
                 viewModel.updateProductsWithLikes()
                 print("Favorites updated! Count: \(viewModel.getLikedProducts().count)")

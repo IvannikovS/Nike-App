@@ -29,12 +29,6 @@ struct JoinUsSheet: View {
                     Text("We’ve sent a code to your email.")
                         .foregroundColor(.secondary)
 
-                    // Code
-//                    TextField("Code", text: $code)
-//                        .keyboardType(.numberPad)
-//                        .textInputAutocapitalization(.never)
-//                        .padding(14)
-//                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray.opacity(0.35)))
                     FloatingLabelTextField(
                         title: "Code",
                         text: $code,
@@ -43,40 +37,12 @@ struct JoinUsSheet: View {
                     ) {
                         // resend code, если понадобится
                     }
-
-                    // First name + Surname
+                    
                     HStack(spacing: 12) {
-//                        TextField("First name", text: $firstName)
-//                            .padding(14)
-//                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray.opacity(0.35)))
-//
-//                        TextField("Surname", text: $surname)
-//                            .padding(14)
-//                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray.opacity(0.35)))
                         FloatingLabelTextField(title: "First name", text: $firstName)
                         FloatingLabelTextField(title: "Surname", text: $surname)
                     }
 
-                    // Password with eye button
-//                    HStack {
-//                        Group {
-//                            if showPassword {
-//                                TextField("Password", text: $password)
-//                            } else {
-//                                SecureField("Password", text: $password)
-//                            }
-//                        }
-//                        .textInputAutocapitalization(.never)
-//
-//                        Button {
-//                            showPassword.toggle()
-//                        } label: {
-//                            Image(systemName: showPassword ? "eye.slash" : "eye")
-//                                .foregroundColor(.secondary)
-//                        }
-//                    }
-//                    .padding(14)
-//                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray.opacity(0.35)))
                     FloatingLabelPasswordField(
                         title: "Password",
                         text: $password,
@@ -102,7 +68,6 @@ struct JoinUsSheet: View {
                         .font(.footnote)
                         .foregroundColor(.secondary)
 
-                    // Bottom continue button
                     Button {
                         onContinue()
                     } label: {
@@ -129,14 +94,6 @@ struct JoinUsSheet: View {
             }
         }
     }
-
-//    private var canContinue: Bool {
-//        // минимальная валидация, чтобы кнопка не была всегда активной
-//        code.trimmingCharacters(in: .whitespacesAndNewlines).count >= 4 &&
-//        firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false &&
-//        surname.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false &&
-//        password.count >= 8
-//    }
 }
 
 #Preview("Join Us Content") {

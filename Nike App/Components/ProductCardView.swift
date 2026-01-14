@@ -1,42 +1,49 @@
-// ProductCardView.swift
 import SwiftUI
 
 struct ProductCardView: View {
     let product: Product
     let onLikeTapped: () -> Void
-    
+
+    private let imageSize: CGFloat = 150
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Изображение товара
+
+            // MARK: - Image
             ZStack(alignment: .topTrailing) {
                 AsyncImage(url: URL(string: product.imageUrl)) { phase in
                     switch phase {
                     case .empty:
                         ProgressView()
-                            .frame(width: 150, height: 150)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
                     case .success(let image):
                         image
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .clipped()
+
                     case .failure:
                         Image(systemName: "photo")
                             .resizable()
                             .scaledToFit()
+                            .padding(24)
                             .foregroundColor(.gray)
+
                     @unknown default:
                         EmptyView()
                     }
                 }
-                .frame(width: 150, height: 150)
+                .frame(width: imageSize, height: imageSize)
                 .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                
-                // Кнопка лайка
-                Button(action: {
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+
+                Button {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                         onLikeTapped()
                     }
-                }) {
+                } label: {
                     Image(systemName: product.isLiked ? "heart.fill" : "heart")
                         .foregroundColor(product.isLiked ? .red : .gray)
                         .padding(8)
@@ -46,54 +53,61 @@ struct ProductCardView: View {
                 }
                 .padding(8)
             }
-            
-            // Бренд
-            if !product.brand.isEmpty {
-                Text(product.brand)
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .lineLimit(1)
-            }
-            
-            // Название товара
+
+            // MARK: - Brand (резервируем строку)
+            Text(product.brand.isEmpty ? " " : product.brand)
+                .font(.caption)
+                .foregroundColor(.gray)
+                .lineLimit(1)
+                .frame(height: 14)
+
+            // MARK: - Product name (всегда 2 строки)
             Text(product.productName)
                 .font(.system(size: 12))
                 .fontWeight(.medium)
                 .foregroundColor(.black)
                 .lineLimit(2)
-                .fixedSize(horizontal: false, vertical: true)
-            
-            // Цена
+                .frame(height: 32, alignment: .top)
+
+            // MARK: - Price
             Text("$\(String(format: "%.2f", product.price))")
                 .font(.system(size: 14))
                 .fontWeight(.semibold)
                 .foregroundColor(.black)
-            
-            // Доступность
-            if product.itemsLeft == 0 {
-                Text("Sold Out")
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(.top, 2)
-            } else if product.itemsLeft < 10 {
-                Text("Only \(product.itemsLeft) left")
-                    .font(.caption)
-                    .foregroundColor(.orange)
-                    .padding(.top, 2)
+                .frame(height: 18)
+
+            // MARK: - Availability (всегда резервируем место)
+            Group {
+                if product.itemsLeft == 0 {
+                    Text("Sold Out")
+                        .foregroundColor(.red)
+                } else if product.itemsLeft < 10 {
+                    Text("Only \(product.itemsLeft) left")
+                        .foregroundColor(.orange)
+                } else {
+                    Text(" ")
+                }
             }
-            
-            // Бестселлер
-            if product.isBestseller {
-                Text("Best Seller")
-                    .font(.caption2)
-                    .fontWeight(.semibold)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .background(Color.yellow.opacity(0.3))
-                    .cornerRadius(4)
+            .font(.caption)
+            .frame(height: 16)
+
+            // MARK: - Bestseller badge (резервируем)
+            Group {
+                if product.isBestseller {
+                    Text("Best Seller")
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.yellow.opacity(0.3))
+                        .cornerRadius(4)
+                } else {
+                    Color.clear
+                        .frame(height: 16)
+                }
             }
         }
-        .frame(width: 160)
+        .frame(width: 160, alignment: .topLeading)
         .padding(.vertical, 8)
     }
 }
