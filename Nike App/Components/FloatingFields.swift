@@ -19,7 +19,6 @@ struct FloatingLabelTextField: View {
                     lineWidth: 1
                 )
 
-            // ЛЕЙБЛ — ВСЕГДА ВИДЕН
             Text(title)
                 .font(.caption)
                 .foregroundColor(.gray)
@@ -27,7 +26,6 @@ struct FloatingLabelTextField: View {
                 .background(Color(.systemBackground))
                 .offset(x: 14, y: -22)
 
-            // поле ввода
             HStack(spacing: 10) {
                 TextField("", text: $text)
                     .keyboardType(keyboardType)

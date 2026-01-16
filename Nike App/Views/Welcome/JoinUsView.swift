@@ -35,7 +35,7 @@ struct JoinUsSheet: View {
                         keyboardType: .numberPad,
                         rightIcon: Image(systemName: "arrow.clockwise")
                     ) {
-                        // resend code, если понадобится
+                        //
                     }
                     
                     HStack(spacing: 12) {

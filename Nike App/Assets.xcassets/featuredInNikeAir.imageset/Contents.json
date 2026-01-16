@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "featured.jpg",
+      "filename" : "Screen5_1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "featured 1.jpg",
+      "filename" : "Screen5_1 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "featured 2.jpg",
+      "filename" : "Screen5_1 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

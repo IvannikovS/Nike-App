@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "BestSellers.png",
+      "filename" : "basketbal.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "BestSellers 1.png",
+      "filename" : "basketbal 1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "BestSellers 2.png",
+      "filename" : "basketbal 2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

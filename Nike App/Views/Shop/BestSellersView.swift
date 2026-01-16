@@ -43,6 +43,8 @@ struct BestSellersView: View {
                 viewModel.filterProducts()
             }
             .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
+                viewModel.loadLikedProducts()
+                viewModel.updateProductsWithLikes()
                 refreshID = UUID()
             }
         }

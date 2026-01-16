@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "NewFeatured.png",
+      "filename" : "Cross-Trainings.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "NewFeatured 1.png",
+      "filename" : "Cross-Trainings 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "NewFeatured 2.png",
+      "filename" : "Cross-Trainings 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

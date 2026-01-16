@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct FavoritesView: View {
@@ -6,39 +5,36 @@ struct FavoritesView: View {
     @State private var refreshID = UUID()
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                HStack {
-                    Text("Favorites")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    
-                    Spacer()
+            NavigationStack {
+                VStack(spacing: 0) {
+                    HStack {
+                        Text("Favorites")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+
+                    if viewModel.getLikedProducts().isEmpty {
+                        emptyStateView
+                    } else {
+                        productsGridView
+                    }
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
-                
-                if viewModel.getLikedProducts().isEmpty {
-                    emptyStateView
-                } else {
-                    productsGridView
+                .toolbar(.hidden, for: .navigationBar)
+                .id(refreshID)
+                .onAppear {
+                    viewModel.loadLikedProducts()
+                    viewModel.updateProductsWithLikes()
                 }
-            }
-            .navigationBarHidden(true)
-            .id(refreshID)
-            .onAppear {
-                viewModel.loadLikedProducts()
-                viewModel.updateProductsWithLikes()
-                print("Favorites count: \(viewModel.getLikedProducts().count)")
-            }
-            .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
-                refreshID = UUID()
-                viewModel.updateProductsWithLikes()
-                print("Favorites updated! Count: \(viewModel.getLikedProducts().count)")
+                .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
+                    viewModel.loadLikedProducts()
+                    viewModel.updateProductsWithLikes()
+                    refreshID = UUID()
+                }
             }
         }
-    }
     
     private var emptyStateView: some View {
         VStack(spacing: 20) {

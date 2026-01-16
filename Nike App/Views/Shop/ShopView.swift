@@ -11,7 +11,7 @@ struct ShopView: View {
 
     let sections: [Scroll] = [
         Scroll(label: "New&Featured", imageLabel: "newFeatured"),
-        Scroll(label: "Shooes", imageLabel: "sectionShooes"),
+        Scroll(label: "Shooes", imageLabel: "shooes"),
         Scroll(label: "Sales", imageLabel: "sales"),
     ]
 

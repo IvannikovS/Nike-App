@@ -1,4 +1,3 @@
-// ProductDataService.swift
 import Foundation
 import Combine
 
@@ -6,7 +5,7 @@ class ProductDataService: ObservableObject {
     static let shared = ProductDataService()
     
     @Published var allProducts: [Product] = []
-    @Published var likedProductIDs: Set<String> = []
+    @Published var likedProductIDs: Set<Int> = []
     
     private let favoritesKey = "likedProducts"
     
@@ -26,7 +25,6 @@ class ProductDataService: ObservableObject {
             let decoder = JSONDecoder()
             allProducts = try decoder.decode([Product].self, from: data)
             
-            // Обновляем статус лайков
             updateProductsWithLikes()
         } catch {
             print("Error loading products: \(error)")
@@ -34,31 +32,30 @@ class ProductDataService: ObservableObject {
     }
     
     func toggleLike(for product: Product) {
-        if likedProductIDs.contains(product.id.uuidString) {
-            likedProductIDs.remove(product.id.uuidString)
+        if likedProductIDs.contains(product.id) {
+            likedProductIDs.remove(product.id)
         } else {
-            likedProductIDs.insert(product.id.uuidString)
+            likedProductIDs.insert(product.id)
         }
         
         saveLikedProducts()
         updateProductsWithLikes()
         
-        // Отправляем уведомление об обновлении
         NotificationCenter.default.post(name: .favoritesUpdated, object: nil)
         objectWillChange.send()
     }
     
     func getLikedProducts() -> [Product] {
-        return allProducts.filter { likedProductIDs.contains($0.id.uuidString) }
+        return allProducts.filter { likedProductIDs.contains($0.id) }
     }
     
     func isProductLiked(_ product: Product) -> Bool {
-        return likedProductIDs.contains(product.id.uuidString)
+        return likedProductIDs.contains(product.id)
     }
     
     private func updateProductsWithLikes() {
         for i in 0..<allProducts.count {
-            allProducts[i].isLiked = likedProductIDs.contains(allProducts[i].id.uuidString)
+            allProducts[i].isLiked = likedProductIDs.contains(allProducts[i].id)
         }
     }
     
@@ -68,14 +65,13 @@ class ProductDataService: ObservableObject {
     }
     
     private func loadLikedProducts() {
-        guard let savedIds = UserDefaults.standard.array(forKey: favoritesKey) as? [String] else {
+        guard let savedIds = UserDefaults.standard.array(forKey: favoritesKey) as? [Int] else {
             return
         }
         likedProductIDs = Set(savedIds)
     }
 }
 
-// Расширение для Notification.Name
 extension Notification.Name {
     static let favoritesUpdated = Notification.Name("favoritesUpdated")
 }

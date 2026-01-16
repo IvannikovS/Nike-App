@@ -4,7 +4,6 @@ struct OnboardingThirdView: View {
     let onContinue: () -> Void
     @State private var selectedOptions: Set<String> = []
     
-    // MARK: - Данные
     private let categories = [
         ("Baseball", "Baseball"),
         ("Big & Tall", "Big & Tall"),

@@ -9,7 +9,6 @@ struct ProductCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
 
-            // MARK: - Image
             ZStack(alignment: .topTrailing) {
                 AsyncImage(url: URL(string: product.imageUrl)) { phase in
                     switch phase {
@@ -54,14 +53,12 @@ struct ProductCardView: View {
                 .padding(8)
             }
 
-            // MARK: - Brand (резервируем строку)
             Text(product.brand.isEmpty ? " " : product.brand)
                 .font(.caption)
                 .foregroundColor(.gray)
                 .lineLimit(1)
                 .frame(height: 14)
 
-            // MARK: - Product name (всегда 2 строки)
             Text(product.productName)
                 .font(.system(size: 12))
                 .fontWeight(.medium)
@@ -69,14 +66,12 @@ struct ProductCardView: View {
                 .lineLimit(2)
                 .frame(height: 32, alignment: .top)
 
-            // MARK: - Price
             Text("$\(String(format: "%.2f", product.price))")
                 .font(.system(size: 14))
                 .fontWeight(.semibold)
                 .foregroundColor(.black)
                 .frame(height: 18)
 
-            // MARK: - Availability (всегда резервируем место)
             Group {
                 if product.itemsLeft == 0 {
                     Text("Sold Out")
@@ -91,7 +86,6 @@ struct ProductCardView: View {
             .font(.caption)
             .frame(height: 16)
 
-            // MARK: - Bestseller badge (резервируем)
             Group {
                 if product.isBestseller {
                     Text("Best Seller")

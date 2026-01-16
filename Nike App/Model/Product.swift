@@ -1,9 +1,8 @@
-// Models.swift
 import Foundation
 import Combine
 
 struct Product: Identifiable, Codable {
-    let id = UUID()
+    let id: Int
     let brand: String
     let productName: String
     let price: Double
@@ -13,6 +12,7 @@ struct Product: Identifiable, Codable {
     let isBestseller: Bool
     
     enum CodingKeys: String, CodingKey {
+        case id
         case brand
         case productName = "product_name"
         case price
@@ -32,7 +32,6 @@ enum Category: String, CaseIterable {
     case pants = "Pants & Tights"
     case equipment = "Accessories & Equipment"
     
-    // Метод для фильтрации пустых категорий
     static func nonEmptyCategories(for products: [Product]) -> [Category] {
         return Category.allCases.filter { category in
             guard category != .all else { return true }

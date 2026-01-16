@@ -1,4 +1,3 @@
-// CategoryFilterView.swift
 import SwiftUI
 
 struct CategoryFilterView: View {

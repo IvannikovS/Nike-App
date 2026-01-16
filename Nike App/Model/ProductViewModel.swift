@@ -1,4 +1,3 @@
-// ProductViewModel.swift
 import Foundation
 import Combine
 import SwiftUI
@@ -8,7 +7,7 @@ class ProductViewModel: ObservableObject {
     @Published var filteredProducts: [Product] = []
     @Published var selectedCategory: Category = .all
     @Published var availableCategories: [Category] = [.all]
-    @Published var likedProductIDs: Set<String> = []
+    @Published var likedProductIDs: Set<Int> = []
     
     let favoritesKey = "likedProducts"
     
@@ -38,10 +37,10 @@ class ProductViewModel: ObservableObject {
     }
     
     func toggleLike(for product: Product) {
-        if likedProductIDs.contains(product.id.uuidString) {
-            likedProductIDs.remove(product.id.uuidString)
+        if likedProductIDs.contains(product.id) {
+            likedProductIDs.remove(product.id)
         } else {
-            likedProductIDs.insert(product.id.uuidString)
+            likedProductIDs.insert(product.id)
         }
         
         saveLikedProducts()
@@ -54,12 +53,12 @@ class ProductViewModel: ObservableObject {
     }
     
     func getLikedProducts() -> [Product] {
-        return products.filter { likedProductIDs.contains($0.id.uuidString) }
+        return products.filter { likedProductIDs.contains($0.id) }
     }
     
     func updateProductsWithLikes() {
         for i in 0..<products.count {
-            products[i].isLiked = likedProductIDs.contains(products[i].id.uuidString)
+            products[i].isLiked = likedProductIDs.contains(products[i].id)
         }
     }
     
@@ -69,7 +68,7 @@ class ProductViewModel: ObservableObject {
     }
     
     func loadLikedProducts() {
-        guard let savedIds = UserDefaults.standard.array(forKey: favoritesKey) as? [String] else {
+        guard let savedIds = UserDefaults.standard.array(forKey: favoritesKey) as? [Int] else {
             return
         }
         likedProductIDs = Set(savedIds)

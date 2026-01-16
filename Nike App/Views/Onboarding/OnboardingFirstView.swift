@@ -3,15 +3,11 @@ import SwiftUI
 struct OnboardingFirstView: View {
     let onContinue: () -> Void
     
-    // MARK: - Основные компоненты
-    
-    // 1. ФОН
     private var mainBackground: some View {
         Color.black
             .ignoresSafeArea()
     }
     
-    // 2. КОЛЛАЖ ИЗОБРАЖЕНИЙ
     private var imageCollage: some View {
         HStack(spacing: 15) {
             leftColumn
@@ -20,7 +16,6 @@ struct OnboardingFirstView: View {
         .padding(.horizontal, -20)
     }
     
-    // 3. ЛЕВАЯ КОЛОНКА ИЗОБРАЖЕНИЙ
     private var leftColumn: some View {
         VStack(spacing: 15) {
             createImage("Screen5_1", width: 100, height: 125)
@@ -30,7 +25,6 @@ struct OnboardingFirstView: View {
         }
     }
     
-    // 4. ПРАВАЯ КОЛОНКА ИЗОБРАЖЕНИЙ
     private var rightColumn: some View {
         VStack(spacing: 15) {
             createImage("Screen5_2", width: 200, height: 145)
@@ -40,7 +34,6 @@ struct OnboardingFirstView: View {
         }
     }
     
-    // 5. ДВА ИЗОБРАЖЕНИЯ РЯДОМ
     private var twoImagesRow: some View {
         HStack(spacing: 10) {
             createImage("Screen5_8", width: 95, height: 150)
@@ -48,7 +41,6 @@ struct OnboardingFirstView: View {
         }
     }
     
-    // 6. ГРАДИЕНТ ПОВЕРХ ИЗОБРАЖЕНИЙ
     private var gradientOverlay: some View {
         LinearGradient(
             gradient: Gradient(colors: [
@@ -63,7 +55,6 @@ struct OnboardingFirstView: View {
         .ignoresSafeArea()
     }
     
-    // 7. ПРОГРЕСС БАР
     private var progressBar: some View {
         ProgressView(value: 0.5, total: 1.0)
             .progressViewStyle(.linear)
@@ -73,7 +64,6 @@ struct OnboardingFirstView: View {
     }
     
     
-    // 8. ТЕКСТ
     private var descriptionText: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("To personalize your")
@@ -85,7 +75,6 @@ struct OnboardingFirstView: View {
         .foregroundColor(.white)
     }
     
-    // 9. КНОПКА
     private var getStartedButton: some View {
         Button("Get Started") {
             onContinue()
@@ -97,7 +86,7 @@ struct OnboardingFirstView: View {
         .cornerRadius(35)
     }
     
-    // 10. ВЕРХНИЙ БЛОК КОНТЕНТА
+    // ВЕРХНИЙ БЛОК КОНТЕНТА
     private var topContentBlock: some View {
         VStack(alignment: .leading, spacing: 0) {
             progressBar
@@ -110,7 +99,7 @@ struct OnboardingFirstView: View {
         }
     }
     
-    // 11. ОСНОВНОЙ КОНТЕЙНЕР КОНТЕНТА
+    // ОСНОВНОЙ КОНТЕЙНЕР КОНТЕНТА
     private var mainContentContainer: some View {
         VStack(alignment: .leading, spacing: 0) {
             topContentBlock
@@ -123,29 +112,20 @@ struct OnboardingFirstView: View {
         }
     }
     
-    // MARK: - Body
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                // СЛОЙ 1: Основной фон
                 mainBackground
-                
-                // СЛОЙ 2: Коллаж изображений
                 imageCollage
                     .frame(width: geometry.size.width + 40)
                     .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
-                
-                // СЛОЙ 3: Градиент
                 gradientOverlay
-                
-                // СЛОЙ 4: Контент
                 mainContentContainer
                     .frame(width: geometry.size.width, height: geometry.size.height)
             }
         }
     }
     
-    // MARK: - Вспомогательная функция
     private func createImage(_ name: String, width: CGFloat, height: CGFloat) -> some View {
         Image(name)
             .resizable()
